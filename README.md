@@ -36,11 +36,11 @@ Agile approach with iterative development and continuous testing
 
 ##  Key Components
 
-**- Data Collection & Preprocessing
-- Forecasting Model Development
-- Early Warning System
-- Dashboard & Visualization
-- API & Cloud Integration**
+- **Data Collection & Preprocessing**
+- **Forecasting Model Development**
+- **Early Warning System**
+- **Dashboard & Visualization**
+- **API & Cloud Integration**
 
 
 
