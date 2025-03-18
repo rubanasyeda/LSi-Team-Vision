@@ -16,6 +16,7 @@ The following datasets were used in this project:
 
 - [Statistics Canada - Table 14-10-0353-01](https://www150.statcan.gc.ca/t1/tbl1/en/tv.action?pid=1410035301): Shelter usage data 
 - [Government of Canada - Homelessness Data](https://housing-infrastructure.canada.ca/homelessness-sans-abri/reports-rapports/data-shelter-2023-donnees-refuge-eng.html): Shelter data result report 2023
+- Government of Canada Historical Climate Data
   
 
 ## Options for Testing/Validation
