@@ -19,7 +19,7 @@ The following datasets were used in this project:
 - Government of Canada Historical Climate Data
   
 
-## Options for Testing/Validation
+## Testing/ Model Validation 
 
 To ensure the reliability of the forecasting model, the following testing and validation approaches will be used:
 
@@ -29,3 +29,40 @@ To ensure the reliability of the forecasting model, the following testing and va
 - **Interpretability & Usability**: Ensure stakeholders can easily understand and interpret model predictions and insights.
 - **False Prediction Analysis**: Track false positives and negatives (e.g., predicting high demand when it doesn’t occur or missing peak demand).
 - **User Feedback & Adoption**: Conduct surveys or interviews with shelter staff and decision-makers to gauge satisfaction with the system’s usability and impact.
+
+## Project Timeline & Deliverables (Now - May 4)
+
+### **Week 1 (March 18 - March 24)**
+- Finalize data sources and define data pipelines.
+- Set up data collection mechanisms and integrations.
+- Begin exploratory data analysis (EDA) on historical shelter data.
+
+### **Week 2 (March 25 - March 31)**
+- Preprocess and clean collected data.
+- Identify key features for forecasting models.
+- Implement baseline forecasting models (ARIMA, LSTM, Prophet, etc.) for evaluation.
+
+### **Week 3 (April 1 - April 7)**
+- Compare forecasting models and optimize for accuracy.
+- Implement additional feature engineering techniques.
+- Start developing the early warning system.
+
+### **Week 4 (April 8 - April 14)**
+- Train the model further.
+- Conduct initial model testing and refinement.
+
+### **Week 5 (April 15 - April 21)**
+- Develop API integrations and cloud-based storage for real-time data (if possible).
+- Begin designing the dashboard interface and visualization tools.
+- Integrate the forecasting model with the dashboard.
+
+### **Week 6 (April 22 - April 28)**
+- Develop and test alert mechanisms in the early warning system.
+- Conduct initial internal testing and collect feedback.
+- Implement final improvements based on testing feedback.
+- Finalize dashboard and ensure user-friendliness.
+
+### **Week 7 (April 29 - May 4)**
+- Gather user feedback and refine the system.
+- Prepare final documentation and user guides.
+- Present project outcomes.
