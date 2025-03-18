@@ -7,7 +7,6 @@ This project aims to develop an advanced forecasting model to predict shelter de
 
 - **Forecasting shelter demand** using historical data, weather patterns, and socio-economic indicators.
 - **Providing early warnings** for demand surges to help shelters allocate resources effectively.
-- **Developing an automated system** that continuously learns and improves predictions over time.
 - **Creating a user-friendly dashboard** for shelters to monitor forecasts, trends, and provide inputs to the model.
 
   ###  Key Components
