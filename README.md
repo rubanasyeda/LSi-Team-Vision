@@ -14,7 +14,7 @@ This project aims to develop an advanced forecasting model to predict shelter de
 
 The following datasets were used in this project:
 
-- [Statistics Canada - Table 14-10-0353-01](https://www150.statcan.gc.ca/t1/tbl1/en/tv.action?pid=1410035301): Shelter usage data 
+- [Statistics Canada - Table 14-10-0353-01](https://www150.statcan.gc.ca/t1/tbl1/en/tv.action?pid=1410035301): Shelter usage data for Saskatoon
 - [Government of Canada - Homelessness Data](https://housing-infrastructure.canada.ca/homelessness-sans-abri/reports-rapports/data-shelter-2023-donnees-refuge-eng.html): Shelter data result report 2023
 - Government of Canada Historical Climate Data
   
@@ -29,6 +29,20 @@ To ensure the reliability of the forecasting model, the following testing and va
 - **Interpretability & Usability**: Ensure stakeholders can easily understand and interpret model predictions and insights.
 - **False Prediction Analysis**: Track false positives and negatives (e.g., predicting high demand when it doesn’t occur or missing peak demand).
 - **User Feedback & Adoption**: Conduct surveys or interviews with shelter staff and decision-makers to gauge satisfaction with the system’s usability and impact.
+
+## Development Methodology
+
+ The development methodology will follow an Agile approach with iterative development and continuous testing
+
+##  Key Components
+
+**- Data Collection & Preprocessing
+- Forecasting Model Development
+- Early Warning System
+- Dashboard & Visualization
+- API & Cloud Integration**
+
+
 
 ## Project Timeline & Deliverables (Now - May 4)
 
