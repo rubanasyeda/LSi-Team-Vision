@@ -32,7 +32,7 @@ To ensure the reliability of the forecasting model, the following testing and va
 
 ## Development Methodology
 
- The development methodology will follow an Agile approach with iterative development and continuous testing
+Agile approach with iterative development and continuous testing
 
 ##  Key Components
 
