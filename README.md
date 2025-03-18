@@ -50,10 +50,10 @@ Agile approach with iterative development and continuous testing
 ### **Week 1 (March 18 - March 24)**
 - Finalize data sources and define data pipelines.
 - Set up data collection mechanisms and integrations.
-- Begin exploratory data analysis (EDA) on historical shelter data.
+- Begin exploratory data analysis (EDA) on historical shelter data. (Identify key features)
+- Map the date 
 
 ### **Week 2 (March 25 - March 31)**
-- Identify key features for forecasting models.
 - Implement baseline forecasting models (ARIMA, LSTM, Prophet, etc.) for evaluation.
 
 ### **Week 3 (April 1 - April 7)**
