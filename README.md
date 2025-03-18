@@ -53,7 +53,6 @@ Agile approach with iterative development and continuous testing
 - Begin exploratory data analysis (EDA) on historical shelter data.
 
 ### **Week 2 (March 25 - March 31)**
-- Preprocess and clean collected data.
 - Identify key features for forecasting models.
 - Implement baseline forecasting models (ARIMA, LSTM, Prophet, etc.) for evaluation.
 
