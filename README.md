@@ -10,6 +10,16 @@ This project aims to develop an advanced forecasting model to predict shelter de
 - **Developing an automated system** that continuously learns and improves predictions over time.
 - **Creating a user-friendly dashboard** for shelters to monitor forecasts, trends, and provide inputs to the model.
 
+  ###  Key Components
+
+- **Data Collection & Preprocessing**
+- **Forecasting Model Development**
+- **Early Warning System**
+- **Dashboard & Visualization**
+- **API & Cloud Integration**
+
+
+
 ## Data Sources
 
 The following datasets were used in this project:
@@ -33,14 +43,6 @@ To ensure the reliability of the forecasting model, the following testing and va
 ## Development Methodology
 
 Agile approach with iterative development and continuous testing
-
-##  Key Components
-
-- **Data Collection & Preprocessing**
-- **Forecasting Model Development**
-- **Early Warning System**
-- **Dashboard & Visualization**
-- **API & Cloud Integration**
 
 
 
