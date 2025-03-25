@@ -59,6 +59,35 @@ To ensure the reliability of the forecasting model, the following testing and va
 
 Agile approach with iterative development and continuous testing
 
+## Outcomes
+
+- Improved forecasting of shelter bed demand using historical, weather, and socio-economic data.
+- Early warning alerts to help shelter staff prepare for demand surges.
+- A user-friendly dashboard for visualizing trends and managing resources.
+- Data-driven decision-making for city planners and social services.
+- Enhanced ability to scale the system to other municipalities.
+
+## Blockers or Risks and Possible Mitigation
+
+- **Data Quality or Missing Data**  
+  *Risk:* Incomplete or inconsistent data may reduce model accuracy.  
+  *Mitigation:* Implement robust data cleaning pipelines and use imputation techniques for missing values.
+
+- **Model Overfitting or Poor Generalization**  
+  *Risk:* Model may perform well on training data but poorly in real scenarios.  
+  *Mitigation:* Use cross-validation, regularization techniques, and monitor performance on unseen test data.
+
+- **Changing Shelter Policies or City Events**  
+  *Risk:* Sudden policy changes or emergency events (e.g., pandemics, extreme weather) may not be reflected in training data.  
+  *Mitigation:* Integrate real-time alerts and allow manual adjustments to forecasts based on new information.
+
+- **Limited Stakeholder Adoption**  
+  *Risk:* Shelter staff may not trust or understand the model's predictions.  
+  *Mitigation:* Build interpretable models and conduct training sessions and feedback loops with end users.
+
+- **Scalability Challenges**  
+  *Risk:* The system may not perform efficiently across different cities or datasets.  
+  *Mitigation:* Design modular architecture with city-specific configuration options and test for generalizability.
 
 
 ## Project Timeline & Deliverables (Now - May 4)
