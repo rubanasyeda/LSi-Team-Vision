@@ -124,7 +124,7 @@ Agile approach with iterative development and continuous testing
 
 
 ### Notes 
-- have a data pipeline
+- have a data pipeline -> break into components -> write tickets on git to / work among the team 
 - have a training set
 - what r risk with dataset
 - understand the dataset 
