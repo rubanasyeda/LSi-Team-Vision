@@ -32,6 +32,16 @@ The following datasets were used in this project:
 3. [Calgary Community Profile](https://data.urbandatacentre.ca/dataset/calgary-community-profile)
 
 
+### Shelter Features
+
+RECORD_ID, DATE, ORGANIZATION, SHELTER, ADDRESS, CITY, PROVINCE, POSTAL_CODE, FACILITY, PROGRAM, POPULATION_GROUP, CURRENT_OCCUPANCY, MAX_CAPACITY
+
+
+### Weather Features
+
+STATION_NAME, CLIMATE_ID, DATE_TIME, YEAR, MONTH, DAY, MAX_TEMP_C, MIN_TEMP_C, MEAN_TEMP_C, HEATING_DEGREE_DAYS_C, COOLING_DEGREE_DAYS_C, TOTAL_RAIN_MM, TOTAL_SNOW_CM, PROVINCE
+
+
   
 
 ## Testing/ Model Validation 
