@@ -16,8 +16,6 @@ This project aims to develop an advanced forecasting model to predict shelter de
 - **Early Warning System**
 - **Dashboard & Visualization**
 
-
-
 ## Data Sources
 
 The following datasets were used in this project:
@@ -126,8 +124,8 @@ Agile approach with iterative development and continuous testing
 
 
 ### Notes 
--have a data pipeline
--have a training set
+- have a data pipeline
+- have a training set
 - what r risk with dataset
 - understand the dataset 
-- -(add actions and then outcomes)
+- add actions and then outcomes
