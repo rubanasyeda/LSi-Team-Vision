@@ -15,7 +15,6 @@ This project aims to develop an advanced forecasting model to predict shelter de
 - **Forecasting Model Development**
 - **Early Warning System**
 - **Dashboard & Visualization**
-- **API & Cloud Integration**
 
 
 
@@ -23,9 +22,16 @@ This project aims to develop an advanced forecasting model to predict shelter de
 
 The following datasets were used in this project:
 
-- [Statistics Canada - Table 14-10-0353-01](https://www150.statcan.gc.ca/t1/tbl1/en/tv.action?pid=1410035301): Shelter usage data for Saskatoon
-- [Government of Canada - Homelessness Data](https://housing-infrastructure.canada.ca/homelessness-sans-abri/reports-rapports/data-shelter-2023-donnees-refuge-eng.html): Shelter data result report 2023
-- Government of Canada Historical Climate Data
+### For Toronto:
+1. [Daily Shelter Overnight Service Occupancy & Capacity](https://open.toronto.ca/dataset/daily-shelter-overnight-service-occupancy-capacity/)  
+2. [Central Intake Calls](https://open.toronto.ca/dataset/central-intake-calls/)
+
+### For Calgary:
+1. [Shelter Utilization, Capacity and Usage](https://data.calgary.ca/Services-and-Amenities/Shelter-Utilization-Capacity-and-Usage-/p7ka-hqjn)  
+2. [Calgary Emergency Shelters Daily Occupancy](https://data.calgary.ca/Services-and-Amenities/Calgary-Emergency-Shelters-Daily-Occupancy/7u2t-3wxf/about_data)  
+3. [Calgary Community Profile](https://data.urbandatacentre.ca/dataset/calgary-community-profile)
+
+
   
 
 ## Testing/ Model Validation 
