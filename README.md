@@ -60,7 +60,6 @@ To ensure the reliability of the forecasting model, the following testing and va
 Agile approach with iterative development and continuous testing
 
 ## Outcomes
-
 - Improved forecasting of shelter bed demand using historical, weather, and socio-economic data.
 - Early warning alerts to help shelter staff prepare for demand surges.
 - A user-friendly dashboard for visualizing trends and managing resources.
@@ -118,10 +117,17 @@ Agile approach with iterative development and continuous testing
 ### **Week 6 (April 22 - April 28)**
 - Develop and test alert mechanisms in the early warning system.
 - Conduct initial internal testing and collect feedback.
-- Implement final improvements based on testing feedback.
-- Finalize dashboard and ensure user-friendliness.
 
 ### **Week 7 (April 29 - May 4)**
 - Gather user feedback and refine the system.
 - Prepare final documentation and user guides.
 - Present project outcomes.
+
+
+
+### Notes 
+-have a data pipeline
+-have a training set
+- what r risk with dataset
+- understand the dataset 
+- -(add actions and then outcomes)
