@@ -129,3 +129,10 @@ Agile approach with iterative development and continuous testing
 - what r risk with dataset
 - understand the dataset 
 - add actions and then outcomes
+
+
+
+![image001](https://github.com/user-attachments/assets/66e43a1b-2d8e-442d-b9d7-138aeb8df517)
+
+
+
