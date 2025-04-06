@@ -6,9 +6,8 @@ from datetime import datetime
 toronto_path = ["../dataset/toronto-occupancy*.csv", 
                 "../dataset/toronto-weather*.csv", 
                 "../dataset/toronto-inflation*.csv", 
-                "../dataset/toronto-unemployment*.csv"]
-
-
+                "../dataset/toronto-unemployment*.csv",
+                "../dataset/toronto-cpi*.csv"]
 
 def clean_and_standardize_date(date_str):
     try:
@@ -24,73 +23,73 @@ def clean_and_standardize_date(date_str):
 
 file_paths = glob.glob("../dataset/*aily*shelter*ove*.csv")  # e.g., shelter_data_2020.csv, ..., 2024.csv
 
-def combine_occupancy_data():
-    dfs = []
+# def combine_occupancy_data():
+#     dfs = []
 
-    # Extract relevant features
-    for file in file_paths:
-        df = pd.read_csv(file)
+#     # Extract relevant features
+#     for file in file_paths:
+#         df = pd.read_csv(file)
 
-        # Keep only relevant columns and rename them
-        df_subset = df[[
-            # "_id",
-            "OCCUPANCY_DATE",
-            "ORGANIZATION_NAME",
-            "SHELTER_GROUP",
-            "LOCATION_ADDRESS",
-            "LOCATION_CITY",
-            "LOCATION_PROVINCE",
-            "LOCATION_POSTAL_CODE",
-            "LOCATION_NAME",
-            "PROGRAM_NAME",
-            "SECTOR",
-            "SERVICE_USER_COUNT",
-            "CAPACITY_ACTUAL_BED"
-        ]].copy()
+#         # Keep only relevant columns and rename them
+#         df_subset = df[[
+#             # "_id",
+#             "OCCUPANCY_DATE",
+#             "ORGANIZATION_NAME",
+#             "SHELTER_GROUP",
+#             "LOCATION_ADDRESS",
+#             "LOCATION_CITY",
+#             "LOCATION_PROVINCE",
+#             "LOCATION_POSTAL_CODE",
+#             "LOCATION_NAME",
+#             "PROGRAM_NAME",
+#             "SECTOR",
+#             "SERVICE_USER_COUNT",
+#             "CAPACITY_ACTUAL_BED"
+#         ]].copy()
 
-        # Rename columns for ML dataset features
-        df_subset.rename(columns={
-            "_id": "RECORD_ID",
-            "OCCUPANCY_DATE": "DATE",
-            "ORGANIZATION_NAME": "ORGANIZATION",
-            "SHELTER_GROUP": "SHELTER",
-            "LOCATION_ADDRESS": "ADDRESS",
-            "LOCATION_CITY": "CITY",
-            "LOCATION_PROVINCE": "PROVINCE",
-            "LOCATION_POSTAL_CODE": "POSTAL_CODE",
-            "LOCATION_NAME": "FACILITY",
-            "PROGRAM_NAME": "PROGRAM",
-            "SECTOR": "POPULATION_GROUP",
-            "SERVICE_USER_COUNT": "CURRENT_OCCUPANCY",
-            "CAPACITY_ACTUAL_BED": "MAX_CAPACITY"
-        }, inplace=True)
+#         # Rename columns for ML dataset features
+#         df_subset.rename(columns={
+#             "_id": "RECORD_ID",
+#             "OCCUPANCY_DATE": "DATE",
+#             "ORGANIZATION_NAME": "ORGANIZATION",
+#             "SHELTER_GROUP": "SHELTER",
+#             "LOCATION_ADDRESS": "ADDRESS",
+#             "LOCATION_CITY": "CITY",
+#             "LOCATION_PROVINCE": "PROVINCE",
+#             "LOCATION_POSTAL_CODE": "POSTAL_CODE",
+#             "LOCATION_NAME": "FACILITY",
+#             "PROGRAM_NAME": "PROGRAM",
+#             "SECTOR": "POPULATION_GROUP",
+#             "SERVICE_USER_COUNT": "CURRENT_OCCUPANCY",
+#             "CAPACITY_ACTUAL_BED": "MAX_CAPACITY"
+#         }, inplace=True)
 
-        df_subset["DATE"] = df_subset["DATE"].astype(str).apply(clean_and_standardize_date)
-        dfs.append(df_subset)
+#         df_subset["DATE"] = df_subset["DATE"].astype(str).apply(clean_and_standardize_date)
+#         dfs.append(df_subset)
 
-    # Combine all yearly data
-    final_df = pd.concat(dfs, ignore_index=True)
+#     # Combine all yearly data
+#     final_df = pd.concat(dfs, ignore_index=True)
 
-    # Clean data
-    final_df = final_df.dropna(subset=["DATE", "CURRENT_OCCUPANCY", "MAX_CAPACITY"])
-    final_df = final_df[final_df["CURRENT_OCCUPANCY"] >= 0]
-    final_df = final_df[final_df["MAX_CAPACITY"] > 0]
+#     # Clean data
+#     final_df = final_df.dropna(subset=["DATE", "CURRENT_OCCUPANCY", "MAX_CAPACITY"])
+#     final_df = final_df[final_df["CURRENT_OCCUPANCY"] >= 0]
+#     final_df = final_df[final_df["MAX_CAPACITY"] > 0]
 
-    # Ensure correct types
-    final_df["DATE"] = final_df["DATE"].astype(str)
-    final_df["CURRENT_OCCUPANCY"] = final_df["CURRENT_OCCUPANCY"].astype(int)
-    final_df["MAX_CAPACITY"] = final_df["MAX_CAPACITY"].astype(int)
+#     # Ensure correct types
+#     final_df["DATE"] = final_df["DATE"].astype(str)
+#     final_df["CURRENT_OCCUPANCY"] = final_df["CURRENT_OCCUPANCY"].astype(int)
+#     final_df["MAX_CAPACITY"] = final_df["MAX_CAPACITY"].astype(int)
 
-    # Move CURRENT_OCCUPANCY to the end
-    columns = [col for col in final_df.columns if col != "CURRENT_OCCUPANCY"] + ["CURRENT_OCCUPANCY"]
-    final_df = final_df[columns]
+#     # Move CURRENT_OCCUPANCY to the end
+#     columns = [col for col in final_df.columns if col != "CURRENT_OCCUPANCY"] + ["CURRENT_OCCUPANCY"]
+#     final_df = final_df[columns]
 
-    # Sort by date
-    final_df = final_df.sort_values("DATE").reset_index(drop=True)
+#     # Sort by date
+#     final_df = final_df.sort_values("DATE").reset_index(drop=True)
 
-    final_df.to_csv("compiled_shelter_dataset.csv", index=True)
+#     final_df.to_csv("compiled_shelter_dataset.csv", index=True)
 
-    print("Dataset compiled and saved as 'compiled_shelter_dataset.csv'")
+#     print("Dataset compiled and saved as 'compiled_shelter_dataset.csv'")
 
 def load_csv_to_pandas(file_path):
     try:
@@ -105,7 +104,7 @@ def load_csv_to_pandas(file_path):
         print("An error occurred:", str(e))
         return None
     
-def loadData(output_data, weather_data, inflation, unemployment, cpi=""):
+def loadData(output_data, weather_data, inflation, unemployment, cpi):
 
     #-------Output Data-------#
     #Loading up the links to the output dataset
@@ -126,9 +125,12 @@ def loadData(output_data, weather_data, inflation, unemployment, cpi=""):
     #Determine the max and min date in the dataset to create a date vector to fill out empty values
     max_date = big_data['OCCUPANCY_DATE'].max()
     min_date = big_data['OCCUPANCY_DATE'].min()
+    print("Min date: ", min_date)
+    print("Max date: ", max_date)
+
     date_range = pd.date_range(start=min_date, end=max_date, freq = 'D')
     date_df = pd.DataFrame({'OCCUPANCY_DATE': date_range})
-
+    
     #-------Weather Data-------#
 
     #loading up the links to the weather dataset
@@ -157,9 +159,9 @@ def loadData(output_data, weather_data, inflation, unemployment, cpi=""):
     #Changing non output dataset's date column to 'OCCUPANCY_DATE'
     big_weather = big_weather.rename(columns = {'Date/Time': 'OCCUPANCY_DATE'})
 
-    # #-------Inflation Data-------#
+    #-------Inflation Data-------#
 
-    # #loading up housing data
+    #loading up housing data
     inflation = load_csv_to_pandas(inflation)
 
     #Dropping irrelevant columns for housing dataset
@@ -171,6 +173,7 @@ def loadData(output_data, weather_data, inflation, unemployment, cpi=""):
     inflation = pd.merge(inflation, date_df, on = 'OCCUPANCY_DATE', how = 'outer')
     inflation = inflation.sort_values(by='OCCUPANCY_DATE').reset_index(drop=True)
     inflation = inflation.ffill()
+
     #-------Unemployment Data-------#
     
     #Loading the unemployment dataset
@@ -187,18 +190,68 @@ def loadData(output_data, weather_data, inflation, unemployment, cpi=""):
     unemployment = unemployment.rename(columns = {"Participation Rate 11": 'Employment_Participation_Rate'})
     unemployment = unemployment.rename(columns = {"Employment Rate 12": 'Employment_Rate'})
 
-    unemployment['OCCUPANCY_DATE'] = pd.to_datetime(unemployment['OCCUPANCY_DATE'], format="%y-%b", errors='coerce').dt.strftime("%Y-%m")
+    # Convert both date columns to datetime objects representing first day of month
+    unemployment['OCCUPANCY_DATE'] = pd.to_datetime(unemployment['OCCUPANCY_DATE'], format="%y-%b", errors='coerce')
+    date_df['OCCUPANCY_DATE'] = pd.to_datetime(date_df['OCCUPANCY_DATE'])
+    date_df['YEAR_MONTH'] = date_df['OCCUPANCY_DATE'].dt.to_period('M')
 
-    unemployment = unemployment[unemployment["OCCUPANCY_DATE"] >= pd.to_datetime(min_date).strftime('%Y-%m')]
-    unemployment = unemployment[unemployment["OCCUPANCY_DATE"] >= pd.to_datetime(max_date).strftime('%Y-%m')]
-    unemployment = pd.merge(date_df, unemployment, on='OCCUPANCY_DATE', how='left')
+    # Prepare unemployment data (monthly values)
+    unemployment['OCCUPANCY_DATE'] = pd.to_datetime(unemployment['OCCUPANCY_DATE'])
+    unemployment['YEAR_MONTH'] = unemployment['OCCUPANCY_DATE'].dt.to_period('M')
+
+    unemployment = unemployment[
+        (unemployment['OCCUPANCY_DATE'] >= pd.to_datetime(min_date)) &
+        (unemployment['OCCUPANCY_DATE'] <= pd.to_datetime(max_date))
+    ]
+
+    # Merge on the unified OCCUPANCY_DATE column
+    unemployment = pd.merge(date_df, unemployment.drop(columns='OCCUPANCY_DATE'), on='YEAR_MONTH', how='left')
+    unemployment = unemployment.drop(columns='YEAR_MONTH')
+
+    unemployment.to_csv("unemply.csv")
+
+    #-------CPI Data-------#
     
-    # #-------Final Data Prep-------#
+    # Load the CPI data
+    cpi = load_csv_to_pandas(cpi)
 
-    # #Merge the datasets together through date
-    big_data = pd.merge(big_data, big_weather, on = 'OCCUPANCY_DATE', how = 'inner')
-    big_data = pd.merge(big_data, inflation, on = 'OCCUPANCY_DATE', how = 'inner')
-    big_data = pd.merge(big_data, unemployment, on = 'OCCUPANCY_DATE', how = 'inner')
+    # Keep only necessary columns
+    columns_to_keep = ['ï»¿"REF_DATE"', 'GEO', 'Products and product groups', 'VALUE']
+    cpi = cpi[columns_to_keep]
+
+    # Rename for clarity
+    cpi = cpi.rename(columns={
+        'ï»¿"REF_DATE"': 'OCCUPANCY_DATE',
+        'Products and product groups': 'CPI_Type',
+        'VALUE': 'CPI_Value'
+    })
+
+    # Convert to datetime (first day of month)
+    cpi['OCCUPANCY_DATE'] = pd.to_datetime(cpi['OCCUPANCY_DATE'])
+
+    # Convert date_df to proper datetime and generate YEAR_MONTH
+    date_df['OCCUPANCY_DATE'] = pd.to_datetime(date_df['OCCUPANCY_DATE'])
+    date_df['YEAR_MONTH'] = date_df['OCCUPANCY_DATE'].dt.to_period('M')
+
+    cpi['YEAR_MONTH'] = cpi['OCCUPANCY_DATE'].dt.to_period('M')
+
+    # Filter CPI based on min/max date
+    cpi = cpi[
+        (cpi['OCCUPANCY_DATE'] >= pd.to_datetime(min_date)) &
+        (cpi['OCCUPANCY_DATE'] <= pd.to_datetime(max_date))
+    ]
+
+    # Merge and broadcast monthly CPI across daily dates
+    cpi = pd.merge(date_df, cpi.drop(columns='OCCUPANCY_DATE'), on='YEAR_MONTH', how='left')
+    cpi = cpi.drop(columns='YEAR_MONTH')
+
+    #-------Final Data Prep-------#
+
+    # Merge the datasets together through date
+    big_data = pd.merge(big_data, big_weather, on = 'OCCUPANCY_DATE', how = 'left')
+    big_data = pd.merge(big_data, inflation, on = 'OCCUPANCY_DATE', how = 'left')
+    big_data = pd.merge(big_data, unemployment, on = 'OCCUPANCY_DATE', how = 'left')
+    big_data = pd.merge(big_data, cpi, on = 'OCCUPANCY_DATE', how = 'left')
 
     big_data = big_data.sort_values(by='OCCUPANCY_DATE')
 
@@ -217,7 +270,7 @@ def loadData(output_data, weather_data, inflation, unemployment, cpi=""):
     big_data.reset_index(inplace=True)
     big_data = big_data.drop(columns = ['index'])
 
-    big_data.to_csv("all_data.csv", index=True)
+    big_data.to_csv("../dataset/all_data.csv", index=True)
     return big_data, shelter_data_frames
 
 
@@ -226,12 +279,6 @@ if __name__ == "__main__":
     weather = glob.glob(toronto_path[1])
     inflation = glob.glob(toronto_path[2])
     umemployment = glob.glob(toronto_path[3])
-    # print(shelter)
-    # print(weather)
-    # print(inflation)
-    # print(umemployment)
+    cpi = glob.glob(toronto_path[4])
 
-    data, df = loadData(shelter, weather, inflation[0], umemployment[0])
-
-    print(data.columns)
-    print(data.head())
+    data, df = loadData(shelter, weather, inflation[0], umemployment[0], cpi[0])
