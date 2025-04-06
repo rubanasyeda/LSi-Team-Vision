@@ -1,0 +1,72 @@
+Forecasting Models for Shelter Demand
+
+Overview
+To accurately forecast shelter occupancy and improve resource planning, we propose three key machine learning models:
+
+1.	Random Forest Regressor
+2.	Prophet (by Meta)
+3.	LSTM (Long Short-Term Memory Network)
+
+Each model is chosen based on its suitability for different types of data, time series behavior, interpretability, and future scalability. Our goal is to combine predictive accuracy with explainability, giving shelter staff confidence in the system's recommendations.
+ 
+
+1. Random Forest Regressor
+Why This Model?
+
+Random Forest is a robust, ensemble-based regression model that works well on structured/tabular data, including historical occupancy, weather, and socio-economic indicators.
+
+Strengths
+•	Handles non-linear relationships well
+•	Resistant to overfitting (via ensemble averaging)
+•	Highly interpretable: can show feature importances
+•	Fast to train and test; good baseline model
+
+Limitations
+•	Doesn't model sequential/time dependencies inherently
+•	Not ideal for predicting long-term trends without extensive feature engineering
+
+Use Case in Our Project
+Used as a baseline to quickly test multiple features, validate assumptions, and provide interpretable early predictions. It helps us understand which features most influence shelter demand (e.g., temperature, day of week, previous occupancy).
+ 
+
+2. Prophet (by Meta)
+
+ Why This Model?
+Prophet is a specialized time-series forecasting model designed to handle seasonal patterns, trends, holidays, and changepoints in data.
+
+Strengths
+•	Built for forecasting demand over time
+•	Supports daily/weekly/monthly trends, holidays, and custom events
+•	Easy to implement with little parameter tuning
+•	Good interpretability of components (trend, seasonality)
+
+Limitations
+•	Assumes additive/multiplicative structure
+•	May underperform on highly complex or noisy data
+
+Use Case in Our Project
+
+Prophet is ideal for longer-term forecasting, such as daily or weekly shelter demand forecasts. It’s particularly useful when accounting for recurring patterns (e.g., colder months, weekends) and city-specific events or policy changes.
+
+ 
+3.  LSTM (Long Short-Term Memory Neural Network)
+Why This Model?
+LSTM is a type of Recurrent Neural Network (RNN) tailored for sequential time-series data. It can learn temporal dependencies and lag effects, making it perfect for modeling how past weather and shelter usage affect future demand.
+
+Strengths
+•	Captures long-term dependencies and trends
+•	Good at modeling complex, nonlinear temporal patterns
+•	Performs well on dense datasets (e.g., hourly/daily records)
+Limitations
+•	Requires careful preprocessing (e.g., normalization, sequence shaping)
+•	Longer training time, harder to interpret
+•	Needs large datasets to generalize well
+
+Use Case in Our Project
+LSTM is used to model fine-grained, short-term demand spikes. For example, predicting bed occupancy for the next few days during a cold snap. It’s also future proof: as more historical data accumulates, LSTM can become the most powerful model in our system.
+ 
+
+Conclusion
+This model triad gives us the best result: quick feedback, long-term seasonality awareness, and deep predictive power. By iterating across these, we’ll build a forecasting system that’s both accurate and trusted by shelters and policy makers.
+
+
