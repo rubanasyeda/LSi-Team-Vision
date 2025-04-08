@@ -18,11 +18,11 @@ Use AI to forecast when shelters will experience high demand, allowing for bette
 
 The following datasets were used in this project:
 
-### For Toronto:
+#### For Toronto:
 1. [Daily Shelter Overnight Service Occupancy & Capacity](https://open.toronto.ca/dataset/daily-shelter-overnight-service-occupancy-capacity/)  
 2. [Central Intake Calls](https://open.toronto.ca/dataset/central-intake-calls/)
 
-### For Calgary:
+#### For Calgary:
 1. [Shelter Utilization, Capacity and Usage](https://data.calgary.ca/Services-and-Amenities/Shelter-Utilization-Capacity-and-Usage-/p7ka-hqjn)  
 2. [Calgary Emergency Shelters Daily Occupancy](https://data.calgary.ca/Services-and-Amenities/Calgary-Emergency-Shelters-Daily-Occupancy/7u2t-3wxf/about_data)  
 3. [Calgary Community Profile](https://data.urbandatacentre.ca/dataset/calgary-community-profile)
