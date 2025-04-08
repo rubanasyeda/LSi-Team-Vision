@@ -9,10 +9,10 @@ Use AI to forecast when shelters will experience high demand, allowing for bette
 
   ###  Key Components
 
-- **Data Collection & Preprocessing**
-- **Forecasting Model Development**
-- **Early Warning System**
-- **Dashboard & Visualization**
+- Data Collection & Preprocessing
+- Forecasting Model Development
+- Early Warning System
+- Dashboard & Visualization
 
 ### Data Sources
 
