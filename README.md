@@ -1,13 +1,11 @@
 # LSi-Team-Vision
-Use AI to forecast when shelters will experience high demand, allowing for better resource allocation, with a focus on predicting the number of beds required.
-
-## Project Scope and Requirements
-
-This project aims to develop an advanced forecasting model to predict shelter demand based on various influencing factors. The key objectives include:
+Use AI to forecast when shelters will experience high demand, allowing for better resource allocation, with a focus on predicting the number of beds required. This project aims to develop an advanced forecasting model to predict shelter demand based on various influencing factors. The key objectives include:
 
 - **Forecasting shelter demand** using historical data, weather patterns, and socio-economic indicators.
 - **Providing early warnings** for demand surges to help shelters allocate resources effectively.
 - **Creating a user-friendly dashboard** for shelters to monitor forecasts, trends, and provide inputs to the model.
+
+## Project Scope and Requirements
 
   ###  Key Components
 
@@ -16,7 +14,7 @@ This project aims to develop an advanced forecasting model to predict shelter de
 - **Early Warning System**
 - **Dashboard & Visualization**
 
-## Data Sources
+### Data Sources
 
 The following datasets were used in this project:
 
