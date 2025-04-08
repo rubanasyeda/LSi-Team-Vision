@@ -81,6 +81,7 @@ Agile approach with iterative development and continuous testing
 ### **Week 7 (April 29 - May 4)**
 - Gather user feedback and refine the system.
 - Present project outcomes.
+- Meeting with the Marketing team 
 
 
 
