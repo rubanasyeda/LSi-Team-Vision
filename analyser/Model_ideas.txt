@@ -3,9 +3,9 @@ Forecasting Models for Shelter Demand
 Overview
 To accurately forecast shelter occupancy and improve resource planning, we propose three key machine learning models:
 
-1.	Random Forest Regressor
-2.	Prophet (by Meta)
-3.	LSTM (Long Short-Term Memory Network)
+1.	Random Forest Regressor (Baseline Model)
+2.	Prophet by Meta (Baseline Model)
+3.	LSTM (Long Short-Term Memory Network) (Deep Learning Model)
 
 Each model is chosen based on its suitability for different types of data, time series behavior, interpretability, and future scalability. Our goal is to combine predictive accuracy with explainability, giving shelter staff confidence in the system's recommendations.
  
