@@ -28,8 +28,7 @@ The following datasets were used in this project:
 3. [Calgary Community Profile](https://data.urbandatacentre.ca/dataset/calgary-community-profile)
 
   
-
-## Testing/ Model Validation 
+### Testing/ Model Validation 
 
 To ensure the reliability of the forecasting model, the following testing and validation approaches will be used:
 
@@ -40,7 +39,7 @@ To ensure the reliability of the forecasting model, the following testing and va
 - **False Prediction Analysis**: Track false positives and negatives (e.g., predicting high demand when it doesn’t occur or missing peak demand).
 - **User Feedback & Adoption**: Conduct surveys or interviews with shelter staff and decision-makers to gauge satisfaction with the system’s usability and impact.
 
-## Development Methodology
+### Development Methodology
 
 Agile approach with iterative development and continuous testing
 
