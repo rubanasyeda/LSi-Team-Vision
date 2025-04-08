@@ -3,7 +3,7 @@ Use AI to forecast when shelters will experience high demand, allowing for bette
 
 - **Forecasting shelter demand** using historical data, weather patterns, and socio-economic indicators.
 - **Providing early warnings** for demand surges to help shelters allocate resources effectively.
-- **Creating a user-friendly dashboard** for shelters to monitor forecasts, trends, and provide inputs to the model.
+- **Creating a user-friendly dashboard** for shelters to monitor forecasts, trends, and provide inputs to the model. 
 
 ## Project Scope and Requirements
 
@@ -42,13 +42,6 @@ To ensure the reliability of the forecasting model, the following testing and va
 ### Development Methodology
 
 Agile approach with iterative development and continuous testing
-
-## Outcomes
-- Improved forecasting of shelter bed demand using historical, weather, and socio-economic data.
-- Early warning alerts to help shelter staff prepare for demand surges.
-- A user-friendly dashboard for visualizing trends and managing resources.
-- Data-driven decision-making for city planners and social services.
-- Enhanced ability to scale the system to other municipalities.
 
 
 ## Project Timeline & Deliverables (Now - May 4)
