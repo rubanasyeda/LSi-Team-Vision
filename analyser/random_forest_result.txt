@@ -1,0 +1,64 @@
+
+![<# alt text #>](Figure_1.png "Figure_1.png")
+
+![<# alt text #>](random_forest_results_toronto.png "random_forest_results_toronto.png")
+
+Model Objective:
+----------------
+To predict daily shelter bed occupancy using Random Forest Regression. The model aims to forecast the number of occupied beds in Toronto shelters based on external features such as weather, inflation rate, unemployment rate, and population.
+
+Data Used:
+----------
+- Dataset: compiled `all_data.csv` (from cleaned and merged historical datasets)
+- Target Variable: OCCUPIED_BEDS
+- Features: 
+  - Max Temp (°C)
+  - Min Temp (°C)
+  - Inflation Rate Change
+  - Population
+  - Unemployment Rate
+  - Extracted time features: DAY, MONTH, YEAR, WEEKDAY
+
+Model Output:
+-------------
+- Model Type: RandomForestRegressor (n_estimators=100, max_depth=10)
+- Test Set Size: 20%
+- Evaluation Metrics:
+  - R² Score: 0.0404
+  - Mean Absolute Error (MAE): 24.61
+  - Root Mean Squared Error (RMSE): 37.55
+
+Performance Summary:
+--------------------
+- The model runs successfully and generates predictions for bed occupancy.
+- However, performance is currently low (R² = 0.04), indicating the model explains only 4% of the variation in shelter demand.
+- As shown in the prediction graph, the model tends to predict near-average values and fails to capture spikes or dips in actual occupancy.
+
+Why Performance Is Low:
+------------------------
+1. **Lack of historical demand data**: The model does not use lag features (e.g., yesterday’s bed count), so it cannot learn from past patterns.
+2. **Limited categorical information**: Features like SHELTER_GROUP or PROGRAM_ID are not yet used to help the model distinguish between shelters with different usage patterns.
+3. **No rolling averages or trends**: The model doesn’t yet understand seasonal or short-term trends (e.g., 7-day moving average).
+4. **Complexity of target**: Shelter occupancy can be influenced by hidden factors (policy, local events, emergency surges) not yet captured in the data.
+
+Planned Improvements:
+---------------------
+- Engineer lag features (e.g., `OCCUPIED_BEDS_LAG_1`, `LAG_7`)
+- Add rolling window statistics (e.g., 7-day average)
+- Include categorical features (e.g., PROGRAM_ID, SHELTER_GROUP) using one-hot encoding
+- Evaluate alternative models such as:
+  - Gradient Boosting (XGBoost / LightGBM)
+  - LSTM (for time-series forecasting)
+
+Next Steps:
+-----------
+- Refactor pipeline to include time-aware features
+- Create comparison benchmarks using MAE and RMSE after each iteration
+- Continue development toward integration with real-time dashboard and early warning system
+
+Status:
+-------
+ Data Pipeline Complete
+ Initial Random Forest Training Complete
+ Model Performance Under Review
+Feature Engineering In Progress
