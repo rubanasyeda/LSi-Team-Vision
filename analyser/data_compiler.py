@@ -9,12 +9,19 @@ toronto_path = ["../dataset/toronto-occupancy*.csv",
                 "../dataset/toronto-unemployment*.csv",
                 "../dataset/toronto-cpi*.csv"]
 
+calgary_path = ["../dataset/calgary-occupancy*.csv", 
+                "../dataset/calgary-weather*.csv", 
+                "../dataset/calgary-inflation*.csv", 
+                "../dataset/calgary-unemployment*.csv",
+                "../dataset/calgary-cpi*.csv"]
+
 def clean_and_standardize_date(date_str):
     try:
         # Case 1: Format like 22-01-01 (YY-MM-DD)
         if len(date_str) == 8 and '-' in date_str:
             return datetime.strptime(date_str, "%y-%m-%d").date()
-        
+        # if len(date_str) == 6 and '-' in date_str:
+        #     return datetime.strptime(date_str, "%y-%m").date()
         # Case 2: ISO format with time or standard YYYY-MM-DD
         return pd.to_datetime(date_str).date()
     
@@ -104,23 +111,41 @@ def load_csv_to_pandas(file_path):
         print("An error occurred:", str(e))
         return None
     
-def loadData(output_data, weather_data, inflation, unemployment, cpi):
+def loadData(path, city):
+    print(path[0])
+    output_data = glob.glob(path[0])
+    weather_data = glob.glob(path[1])
+    inflation = glob.glob(path[2])[0]
+    unemployment = glob.glob(path[3])[0]
+    cpi = glob.glob(path[4])[0]
 
+    print(output_data)
     #-------Output Data-------#
     #Loading up the links to the output dataset
-    for i in range(len(output_data)):
-        output_data[i] = load_csv_to_pandas(output_data[i])
+    if city == "calgary":
+        output_data = load_csv_to_pandas(output_data[0])
 
-    #Dropping irrelevant columns for output datasets
-    for i in range(len(output_data)):
-        output_data[i] = output_data[i].drop(columns = ['_id', 'ORGANIZATION_ID', 'SHELTER_ID', 'LOCATION_ID', 'LOCATION_CITY', 'LOCATION_PROVINCE', 'PROGRAM_NAME', 'SECTOR', 'PROGRAM_MODEL','OVERNIGHT_SERVICE_TYPE', 'PROGRAM_AREA', 'SERVICE_USER_COUNT', 'CAPACITY_FUNDING_BED', 'UNOCCUPIED_BEDS', 'UNAVAILABLE_BEDS', 'CAPACITY_FUNDING_ROOM', 'UNOCCUPIED_ROOMS', 'UNAVAILABLE_ROOMS'])
-        output_data[i]['OCCUPANCY_DATE'] = output_data[i]['OCCUPANCY_DATE'].astype(str).apply(clean_and_standardize_date)
-        output_data[i]['OCCUPANCY_DATE'] =  pd.to_datetime(output_data[i]['OCCUPANCY_DATE'])
+        output_data = output_data.drop(columns = ['YEAR', 'MONTH', 'Daytime'])
+        output_data['Date'] = output_data['Date'].astype(str).apply(clean_and_standardize_date)
+        output_data['Date'] =  pd.to_datetime(output_data['Date'])
 
-    #Joining the Output data together
-    big_data = output_data[0]
-    for i in range(1,len(output_data)):
-        big_data = pd.concat([big_data, output_data[i]], ignore_index = True)
+        output_data = output_data.rename(columns = {'Date': 'OCCUPANCY_DATE'})
+        big_data = output_data
+
+    else:
+        for i in range(len(output_data)):
+            output_data[i] = load_csv_to_pandas(output_data[i])
+
+        #Dropping irrelevant columns for output datasets
+        for i in range(len(output_data)):
+            output_data[i] = output_data[i].drop(columns = ['_id', 'ORGANIZATION_ID', 'SHELTER_ID', 'LOCATION_ID', 'LOCATION_CITY', 'LOCATION_PROVINCE', 'PROGRAM_NAME', 'SECTOR', 'PROGRAM_MODEL','OVERNIGHT_SERVICE_TYPE', 'PROGRAM_AREA', 'SERVICE_USER_COUNT', 'CAPACITY_FUNDING_BED', 'UNOCCUPIED_BEDS', 'UNAVAILABLE_BEDS', 'CAPACITY_FUNDING_ROOM', 'UNOCCUPIED_ROOMS', 'UNAVAILABLE_ROOMS'])
+            output_data[i]['OCCUPANCY_DATE'] = output_data[i]['OCCUPANCY_DATE'].astype(str).apply(clean_and_standardize_date)
+            output_data[i]['OCCUPANCY_DATE'] =  pd.to_datetime(output_data[i]['OCCUPANCY_DATE'])
+
+        #Joining the Output data together
+        big_data = output_data[0]
+        for i in range(1,len(output_data)):
+            big_data = pd.concat([big_data, output_data[i]], ignore_index = True)
 
     #Determine the max and min date in the dataset to create a date vector to fill out empty values
     max_date = big_data['OCCUPANCY_DATE'].max()
@@ -167,12 +192,33 @@ def loadData(output_data, weather_data, inflation, unemployment, cpi):
     #Dropping irrelevant columns for housing dataset
     inflation = inflation.rename(columns = {inflation.columns[0]: 'OCCUPANCY_DATE'})
     inflation = inflation.rename(columns = {inflation.columns[1]: 'Inflation_Rate_Change'})
-    inflation["OCCUPANCY_DATE"] = pd.to_datetime(inflation["OCCUPANCY_DATE"])
-    inflation = inflation[inflation["OCCUPANCY_DATE"] >= min_date]
-    inflation = inflation[inflation["OCCUPANCY_DATE"] <= max_date].reset_index(drop=True)
-    inflation = pd.merge(inflation, date_df, on = 'OCCUPANCY_DATE', how = 'outer')
-    inflation = inflation.sort_values(by='OCCUPANCY_DATE').reset_index(drop=True)
-    inflation = inflation.ffill()
+
+    date_df['OCCUPANCY_DATE'] = pd.to_datetime(date_df['OCCUPANCY_DATE'])
+    date_df['YEAR_MONTH'] = date_df['OCCUPANCY_DATE'].dt.to_period('M')
+
+
+    if city == "calgary":
+        inflation['OCCUPANCY_DATE'] = pd.to_datetime(inflation['OCCUPANCY_DATE'], format="%y-%b", errors='coerce')
+
+        # Prepare unemployment data (monthly values)
+        inflation['OCCUPANCY_DATE'] = pd.to_datetime(inflation['OCCUPANCY_DATE'])
+        inflation['YEAR_MONTH'] = inflation['OCCUPANCY_DATE'].dt.to_period('M')
+
+        inflation = inflation[
+            (inflation['OCCUPANCY_DATE'] >= pd.to_datetime(min_date)) &
+            (inflation['OCCUPANCY_DATE'] <= pd.to_datetime(max_date))
+        ]
+
+        # Merge on the unified OCCUPANCY_DATE column
+        inflation = pd.merge(date_df, inflation.drop(columns='OCCUPANCY_DATE'), on='YEAR_MONTH', how='left')
+        inflation = inflation.drop(columns='YEAR_MONTH')
+
+    else:
+        inflation["OCCUPANCY_DATE"] = pd.to_datetime(inflation["OCCUPANCY_DATE"])
+        inflation = inflation[inflation["OCCUPANCY_DATE"] <= max_date].reset_index(drop=True)
+        inflation = pd.merge(inflation, date_df, on = 'OCCUPANCY_DATE', how = 'outer')
+        inflation = inflation.sort_values(by='OCCUPANCY_DATE').reset_index(drop=True)
+        inflation = inflation.ffill()
 
     #-------Unemployment Data-------#
     
@@ -180,20 +226,22 @@ def loadData(output_data, weather_data, inflation, unemployment, cpi):
     unemployment = load_csv_to_pandas(unemployment)
     
     #Analyize Data
-    unemployment = unemployment.drop(columns = ['Labour force 7', 'Employment 8', 'Unemployment 9'])
+    unemployment = unemployment.rename(columns = {unemployment.columns[0]:'OCCUPANCY_DATE'})
 
-    unemployment = unemployment.rename(columns = {'ï»¿Date': 'OCCUPANCY_DATE'})
-
-    unemployment = unemployment.rename(columns = {"Population 6": 'Population'})
-    unemployment['Population'] = unemployment['Population'].str.replace(',', '', regex=False).astype(float)*1000
-    unemployment = unemployment.rename(columns = {"Unemployment Rate 10": 'Unemployment_Rate'})
-    unemployment = unemployment.rename(columns = {"Participation Rate 11": 'Employment_Participation_Rate'})
-    unemployment = unemployment.rename(columns = {"Employment Rate 12": 'Employment_Rate'})
+    if city == "calgary":
+         unemployment = unemployment.rename(columns = {unemployment.columns[1]:'Unemployment_Rate'})
+    else:
+        unemployment = unemployment.drop(columns = ['Labour force 7', 'Employment 8', 'Unemployment 9'])
+        unemployment = unemployment.rename(columns = {"Population 6": 'Population'})
+        unemployment['Population'] = unemployment['Population'].str.replace(',', '', regex=False).astype(float)*1000
+        unemployment = unemployment.rename(columns = {"Unemployment Rate 10": 'Unemployment_Rate'})
+        unemployment = unemployment.rename(columns = {"Participation Rate 11": 'Employment_Participation_Rate'})
+        unemployment = unemployment.rename(columns = {"Employment Rate 12": 'Employment_Rate'})
 
     # Convert both date columns to datetime objects representing first day of month
     unemployment['OCCUPANCY_DATE'] = pd.to_datetime(unemployment['OCCUPANCY_DATE'], format="%y-%b", errors='coerce')
-    date_df['OCCUPANCY_DATE'] = pd.to_datetime(date_df['OCCUPANCY_DATE'])
-    date_df['YEAR_MONTH'] = date_df['OCCUPANCY_DATE'].dt.to_period('M')
+    # date_df['OCCUPANCY_DATE'] = pd.to_datetime(date_df['OCCUPANCY_DATE'])
+    # date_df['YEAR_MONTH'] = date_df['OCCUPANCY_DATE'].dt.to_period('M')
 
     # Prepare unemployment data (monthly values)
     unemployment['OCCUPANCY_DATE'] = pd.to_datetime(unemployment['OCCUPANCY_DATE'])
@@ -208,7 +256,7 @@ def loadData(output_data, weather_data, inflation, unemployment, cpi):
     unemployment = pd.merge(date_df, unemployment.drop(columns='OCCUPANCY_DATE'), on='YEAR_MONTH', how='left')
     unemployment = unemployment.drop(columns='YEAR_MONTH')
 
-    unemployment.to_csv("unemply.csv")
+    # unemployment.to_csv("unemply.csv")
 
     #-------CPI Data-------#
     
@@ -255,30 +303,42 @@ def loadData(output_data, weather_data, inflation, unemployment, cpi):
 
     big_data = big_data.sort_values(by='OCCUPANCY_DATE')
 
-    #Placing the bed and room occupancy column last
-    room_occupancy = big_data.pop('OCCUPANCY_RATE_ROOMS')
-    bed_occupancy = big_data.pop('OCCUPANCY_RATE_BEDS')
-    big_data['OCCUPANCY_RATE_BEDS'] = bed_occupancy
-    big_data['OCCUPANCY_RATE_ROOMS'] = room_occupancy
+    if city == "calgary":
+        room_occupancy = big_data.pop('Overnight')
+        room_capacity = big_data.pop('Capacity')
+        big_data['OCCUPANCY_RATE_ROOMS'] = room_occupancy/room_capacity
 
-    grouped_data = big_data.groupby('PROGRAM_ID')
-    shelter_data_frames = {}
-    for shelter_id, shelter_group in grouped_data:
-        shelter_data_frames[shelter_id] = shelter_group
-        shelter_data_frames[shelter_id]['OCCUPANCY_DATE'] = pd.to_datetime(shelter_data_frames[shelter_id]['OCCUPANCY_DATE'])
+        grouped_data = big_data.groupby('Shelter')
+        shelter_data_frames = {}
+        for shelter_id, shelter_group in grouped_data:
+            shelter_data_frames[shelter_id] = shelter_group
+            shelter_data_frames[shelter_id]['OCCUPANCY_DATE'] = pd.to_datetime(shelter_data_frames[shelter_id]['OCCUPANCY_DATE'])
+    else:
+        #Placing the bed and room occupancy column last
+        room_occupancy = big_data['OCCUPANCY_RATE_ROOMS']
+        bed_occupancy = big_data['OCCUPANCY_RATE_BEDS']
+        big_data['OCCUPANCY_RATE_BEDS'] = bed_occupancy
+        big_data['OCCUPANCY_RATE_ROOMS'] = room_occupancy
+
+        grouped_data = big_data.groupby('PROGRAM_ID')
+        shelter_data_frames = {}
+        for shelter_id, shelter_group in grouped_data:
+            shelter_data_frames[shelter_id] = shelter_group
+            shelter_data_frames[shelter_id]['OCCUPANCY_DATE'] = pd.to_datetime(shelter_data_frames[shelter_id]['OCCUPANCY_DATE'])
 
     big_data.reset_index(inplace=True)
     big_data = big_data.drop(columns = ['index'])
 
-    big_data.to_csv("../dataset/all_data.csv", index=True)
+    big_data.to_csv("../dataset/"+ city +"_data.csv", index=True)
     return big_data, shelter_data_frames
 
 
 if __name__ == "__main__":
-    shelter = glob.glob(toronto_path[0])
-    weather = glob.glob(toronto_path[1])
-    inflation = glob.glob(toronto_path[2])
-    umemployment = glob.glob(toronto_path[3])
-    cpi = glob.glob(toronto_path[4])
+    city = "toronto"
 
-    data, df = loadData(shelter, weather, inflation[0], umemployment[0], cpi[0])
+    city_paths = {
+    "calgary": calgary_path,
+    "toronto": toronto_path,
+}
+    path = city_paths[city]
+    data, df = loadData(path, city=city)
