@@ -1,7 +1,7 @@
 
 ![<# alt text #>](Figure_1.png "Figure_1.png")
 
-![<# alt text #>](random_forest_results_toronto.png "random_forest_results_toronto.png")
+![Random Forest Results](random_forest_results_toronto.png)
 
 Model Objective:
 ----------------
