@@ -58,7 +58,7 @@ Next Steps:
 
 Status:
 -------
- Data Pipeline Complete
- Initial Random Forest Training Complete
- Model Performance Under Review
-Feature Engineering In Progress
+- Data Pipeline Complete
+- Initial Random Forest Training Complete
+- Model Performance Under Review
+- Feature Engineering In Progress
