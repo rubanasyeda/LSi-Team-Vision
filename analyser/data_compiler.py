@@ -1,3 +1,5 @@
+import csv
+
 import pandas as pd
 import glob
 from datetime import datetime
@@ -332,6 +334,50 @@ def loadData(path, city):
     big_data.to_csv("../dataset/"+ city +"_data.csv", index=True)
     return big_data, shelter_data_frames
 
+def merge_weather(city):
+    new_csv_data = []
+    for year in range(2021, 2026):
+        filename = f"../dataset/{city}-weather-{year}.csv"
+        with open(filename) as csvfile:
+            reader = csv.DictReader(csvfile)
+            for row in reader:
+                new_csv_data.append([
+                    row["Date/Time"],  # Date
+                    row["Max Temp (°C)"],  # Max Temp
+                    row["Min Temp (°C)"],  # Min Temp
+                    row["Mean Temp (°C)"],  # Mean Temp
+                    row["Total Rain (mm)"],  # Precipitation
+                    row["Total Snow (cm)"],  # Snowfall
+                    row["Snow on Grnd (cm)"],  # Snow Depth
+                ])
+
+    with open('weather-toronto-full.csv', 'w') as csvfile:
+        writer = csv.writer(csvfile)
+        writer.writerow(["Date/Time", "Max Temp (°C)", "Min Temp (°C)", "Mean Temp (°C)", "Total Rain (mm)", "Total Snow (cm)", "Snow on Grnd (cm)"])
+        writer.writerows(new_csv_data)
+
+def merge_occupancy(city):
+    new_csv_data = []
+    for year in range(2021, 2026):
+        filename = f"../dataset/{city}-occupancy-{year}.csv"
+        with open(filename) as csvfile:
+            reader = csv.DictReader(csvfile)
+            for row in reader:
+                new_csv_data.append([
+                    row["OCCUPANCY_DATE"],  # Date
+                    row["ORGANIZATION_NAME"],  # Max Temp
+                    row["LOCATION_ID"],  # Min Temp
+                    row["PROGRAM_ID"],  # Mean Temp
+                    row["CAPACITY_ACTUAL_BED"],  # Precipitation
+                    row["UNOCCUPIED_BEDS"],  # Snowfall
+                    row["UNOCCUPIED_ROOMS"],  # Snow Depth
+                ])
+
+    with open('occupancy-toronto-full.csv', 'w') as csvfile:
+        writer = csv.writer(csvfile)
+        writer.writerow(["OCCUPANCY_DATE", "ORGANIZATION_NAME", "LOCATION_ID", "PROGRAM_ID", "CAPACITY_ACTUAL_BED", "UNOCCUPIED_BEDS", "UNOCCUPIED_ROOMS"])
+        writer.writerows(new_csv_data)
+
 
 if __name__ == "__main__":
     city = "toronto"
@@ -341,4 +387,6 @@ if __name__ == "__main__":
     "toronto": toronto_path,
 }
     path = city_paths[city]
-    data, df = loadData(path, city=city)
+    # data, df = loadData(path, city=city)
+    # merge_weather(city)
+    merge_occupancy(city)
