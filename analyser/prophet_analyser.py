@@ -6,11 +6,11 @@ from prophet import Prophet
 from prophet.diagnostics import cross_validation, performance_metrics
 import utils
 
-df = pd.read_csv('compiled_shelter_dataset_Toronto.csv', usecols=['DATE', 'CURRENT_OCCUPANCY'])
+df = pd.read_csv('occupancy-toronto-full.csv', usecols=['OCCUPANCY_DATE', 'UNOCCUPIED_BEDS'])
 # print(df.head())
 df.info()
 
-df['DATE'] = pd.to_datetime(df['DATE'], format="%Y-%m-%d")
+df['OCCUPANCY_DATE'] = pd.to_datetime(df['OCCUPANCY_DATE'], format="mixed")
 ts = df
 
 ts.columns = ['ds', 'y']
@@ -33,10 +33,10 @@ data_with_regressors = pd.merge(ts, weather_data, on='ds', how='left')
 
 
 # Handle NaN values in the 'temp' column
-data_with_regressors['temp'] = data_with_regressors['temp'].fillna(method='ffill')  # Forward fill
-data_with_regressors['temp'] = data_with_regressors['temp'].fillna(method='bfill')  # Backward fill
+# data_with_regressors['temp'] = data_with_regressors['temp'].fillna(method='ffill')  # Forward fill
+# data_with_regressors['temp'] = data_with_regressors['temp'].fillna(method='bfill')  # Backward fill
 # Alternatively, you can use a default value like the mean temperature:
-# data_with_regressors['temp'] = data_with_regressors['temp'].fillna(data_with_regressors['temp'].mean())
+data_with_regressors['temp'] = data_with_regressors['temp'].fillna(data_with_regressors['temp'].mean())
 
 # Ensure no NaN values remain
 if data_with_regressors['temp'].isnull().any():
@@ -59,7 +59,7 @@ print(forecast[['ds', 'yhat', 'yhat_lower', 'yhat_upper']])
 forecast[['ds', 'yhat', 'yhat_lower', 'yhat_upper']].tail()
 fig1 = m.plot(forecast)
 
-df_cv = cross_validation(m, initial='70 days', period='10 days', horizon='365 days')
+df_cv = cross_validation(m, initial='780 days', period='100 days', horizon='365 days')
 print(df_cv.head())
 
 df_p = performance_metrics(df_cv)
@@ -69,4 +69,4 @@ plot_plotly(m, forecast)
 
 plot_components_plotly(m, forecast)
 
-# plt.show()
+plt.show()
