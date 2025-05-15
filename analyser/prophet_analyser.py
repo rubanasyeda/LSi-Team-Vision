@@ -29,6 +29,15 @@ weather_data = weather_data.rename(columns={'Date/Time': 'ds', 'Mean Temp (°C)'
 weather_data = weather_data.interpolate(method='linear')  # Handle missing values
 
 # Merge with shelter data
+# data_with_regressors = pd.merge(ts, weather_data, on='ds', how='left')
+
+# employment_data = pd.read_csv('../dataset/toronto-unemployment-2021-2025.csv', usecols=['Date', 'Unemployment rate 10'])
+# employment_data['Date'] = pd.to_datetime(employment_data['Date'], format="%y-%b")
+# employment_data = employment_data.rename(columns={'Date': 'ds', 'Unemployment rate 10': 'unemployment'})
+# employment_data = employment_data.interpolate(method='linear')  # Handle missing values
+#
+# # Merge with shelter data
+# data_with_regressors = pd.merge(ts, weather_data, employment_data, on='ds', how='left')
 data_with_regressors = pd.merge(ts, weather_data, on='ds', how='left')
 
 
@@ -46,10 +55,17 @@ if data_with_regressors['temp'].isnull().any():
 m = Prophet()
 # m.add_regressor('temp', prior_scale=0.5, mode='multiplicative')
 m.add_regressor('temp', prior_scale=0.5, mode='multiplicative')
+# m.add_regressor('unemployment', prior_scale=0.5, mode='multiplicative')
 m.fit(data_with_regressors)
 
 future = m.make_future_dataframe(periods=60)
 future = pd.merge(future, weather_data, on='ds', how='left')
+# future = pd.merge(future, employment_data, on='ds', how='left')
+
+# Ensure no NaN values remain in the regressors
+future['temp'] = future['temp'].fillna(weather_data['temp'].mean())
+# future['unemployment'] = future['unemployment'].fillna(employment_data['unemployment'].mean())
+
 forecast = m.predict(future)
 future.tail()
 future.plot()
