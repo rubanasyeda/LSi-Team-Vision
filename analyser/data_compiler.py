@@ -336,7 +336,7 @@ def loadData(path, city):
 
 def merge_weather(city):
     new_csv_data = []
-    for year in range(2021, 2026):
+    for year in range(2013, 2025):
         filename = f"../dataset/{city}-weather-{year}.csv"
         with open(filename) as csvfile:
             reader = csv.DictReader(csvfile)
@@ -351,7 +351,7 @@ def merge_weather(city):
                     row["Snow on Grnd (cm)"],  # Snow Depth
                 ])
 
-    with open('weather-toronto-full.csv', 'w') as csvfile:
+    with open('weather-calgary-full.csv', 'w') as csvfile:
         writer = csv.writer(csvfile)
         writer.writerow(["Date/Time", "Max Temp (°C)", "Min Temp (°C)", "Mean Temp (°C)", "Total Rain (mm)", "Total Snow (cm)", "Snow on Grnd (cm)"])
         writer.writerows(new_csv_data)
@@ -378,9 +378,8 @@ def merge_occupancy(city):
         writer.writerow(["OCCUPANCY_DATE", "ORGANIZATION_NAME", "LOCATION_ID", "PROGRAM_ID", "CAPACITY_ACTUAL_BED", "UNOCCUPIED_BEDS", "UNOCCUPIED_ROOMS"])
         writer.writerows(new_csv_data)
 
-
 if __name__ == "__main__":
-    city = "toronto"
+    city = "calgary"
 
     city_paths = {
     "calgary": calgary_path,
@@ -389,4 +388,4 @@ if __name__ == "__main__":
     path = city_paths[city]
     # data, df = loadData(path, city=city)
     # merge_weather(city)
-    merge_occupancy(city)
+    # merge_occupancy(city)
