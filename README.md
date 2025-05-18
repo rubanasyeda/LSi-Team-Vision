@@ -1,48 +1,67 @@
-# LSi-Team-Vision
-Use AI to forecast when shelters will experience high demand, allowing for better resource allocation, with a focus on predicting the number of beds required. This project aims to develop an advanced forecasting model to predict shelter demand based on various influencing factors. The key objectives include:
+# 🏠 Forecasting Shelter Demand for the Homeless in Saskatoon
 
-- **Forecasting shelter demand** using historical data, weather patterns, and socio-economic indicators.
-- **Providing early warnings** for demand surges to help shelters allocate resources effectively.
-- **Creating a user-friendly dashboard** for shelters to monitor forecasts, trends, and provide inputs to the model. 
+## 📌 Introduction
+Homelessness affects over **235,000 Canadians each year**, and Saskatoon has seen its homeless population **triple since 2022**. With increasing pressure on shelter systems from extreme weather and capacity limitations, proactive resource planning is urgently needed. Unfortunately, Saskatoon lacks open-access data on shelter occupancy, making direct forecasting difficult. This project addresses that gap by using data from Toronto and Calgary to train predictive models that can eventually be adapted to Saskatoon's needs.
 
-## Project Scope and Requirements
+## 🎯 Objective
+The goal of this project was to **build a predictive model** to forecast shelter bed occupancy in Saskatoon, using comparable data from other Canadian cities. We aimed to assess the feasibility of **AI-driven forecasting** for homelessness resource planning in the absence of local data.
 
-  ###  Key Components
+## 🔍 Approach & Methodology
+We collected and analyzed the following:
+- **Shelter occupancy data** (2021–2025) from Toronto and Calgary
+- **Weather data**: max/min temperature, precipitation, snow on ground
+- **Economic indicators**: inflation rate change, unemployment rate, and Consumer Price Index (CPI)
 
-- Data Collection & Preprocessing
-- Forecasting Model Development
-- Early Warning System
-- Dashboard & Visualization
+### Models Developed:
+- **Random Forest**: for capturing nonlinear feature interactions
+- **Prophet (by Meta)**: a time-series model with built-in seasonality analysis
+- **LSTM (Long Short-Term Memory)**: for modeling sequential, multivariate time-series data
 
-### Data Sources
+## 📊 Results
+Among all models, **Multivariate LSTM** showed the best performance:
+- **Mean Absolute Error (MAE):** ~0.83  
+- **Mean Root Squared Error (MRSE):** ~1.0  
+
+These results demonstrate that shelter demand can be forecasted with reasonable accuracy using historical and environmental trends, even when relying on proxy data.
+
+## 🔮 Future Work & Conclusion
+Our next steps include:
+- **Integrating Saskatoon-specific shelter data**
+- Adding features like **wind chill**, **event-based surges**, and **program usage**
+- Partnering with local shelters for **domain feedback and validation**
+- Enabling **early-warning systems** for shelter operators
+
+This project highlights the potential of machine learning models to enhance data-driven planning for homelessness services, paving the way for smarter, more responsive systems in the future.
+
+---
+
+## 📂 Data Sources
 
 The following datasets were used in this project:
 
-#### For Toronto:
+### For Toronto:
 1. [Daily Shelter Overnight Service Occupancy & Capacity](https://open.toronto.ca/dataset/daily-shelter-overnight-service-occupancy-capacity/)  
 2. [Central Intake Calls](https://open.toronto.ca/dataset/central-intake-calls/)
 
-#### For Calgary:
+### For Calgary:
 1. [Shelter Utilization, Capacity and Usage](https://data.calgary.ca/Services-and-Amenities/Shelter-Utilization-Capacity-and-Usage-/p7ka-hqjn)  
 2. [Calgary Emergency Shelters Daily Occupancy](https://data.calgary.ca/Services-and-Amenities/Calgary-Emergency-Shelters-Daily-Occupancy/7u2t-3wxf/about_data)  
 3. [Calgary Community Profile](https://data.urbandatacentre.ca/dataset/calgary-community-profile)
 
-  
-### Testing/ Model Validation 
+---
 
-To ensure the reliability of the forecasting model, the following testing and validation approaches will be used:
+## 🛠️ Tech Stack
+- Python (Pandas, NumPy, Scikit-learn, TensorFlow/Keras, Prophet)
+- Jupyter Notebooks
+- Google Colab
+- GitHub for version control
 
-- **Accuracy Measurement**: Compare predicted shelter demand with actual demand to evaluate the model's accuracy.
-- **Scenario Testing**: Assess model performance under different conditions, such as extreme weather or seasonal variations.
-- **Scalability Analysis**: Test whether the system can be applied to different cities or regions with varying homelessness challenges.
-- **Interpretability & Usability**: Ensure stakeholders can easily understand and interpret model predictions and insights.
-- **False Prediction Analysis**: Track false positives and negatives (e.g., predicting high demand when it doesn’t occur or missing peak demand).
-- **User Feedback & Adoption**: Conduct surveys or interviews with shelter staff and decision-makers to gauge satisfaction with the system’s usability and impact.
+---
 
-### Development Methodology
+## 🤝 Acknowledgements
+This project was completed as part of the **RBC Borealis Let's SOLVE it Mentorship Program**, under the guidance of **Wasim Ismail**.
 
-Agile approach with iterative development and continuous testing
-
+---
 
 ## Project Timeline & Deliverables (Now - May 4)
 
@@ -82,14 +101,5 @@ Agile approach with iterative development and continuous testing
 - Gather user feedback and refine the system.
 - Present project outcomes.
 - Meeting with the Marketing team - May 3
-
-
-
-
-##### DATA PIPELINE EXAMPLE
-
-
-![image001](https://github.com/user-attachments/assets/66e43a1b-2d8e-442d-b9d7-138aeb8df517)
-
 
 
