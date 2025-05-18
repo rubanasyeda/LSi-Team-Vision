@@ -58,12 +58,10 @@ The following datasets were used in this project:
 
 ---
 
-## 📁 Repository Structure
+## 🤝 Acknowledgements
+This project was completed as part of the **RBC Borealis Let's SOLVE it Mentorship Program**, under the guidance of **Wasim Ismail**.
 
-
-
-
-
+---
 
 ## Project Timeline & Deliverables (Now - May 4)
 
